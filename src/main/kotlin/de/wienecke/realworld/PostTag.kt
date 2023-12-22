@@ -22,13 +22,11 @@ class PostTag private constructor(private val props: PostTagProps) {
     }
 }
 
-
 data class PostTagsProps(val tags: Set<PostTag>)
 
 class PostTags private constructor(private val props: PostTagsProps) {
     val tags: Set<PostTag>
         get() = props.tags
-
 
     fun toStringList(): Set<String> {
         return tags.map { it.value }.toSet()
@@ -59,7 +57,6 @@ class PostTags private constructor(private val props: PostTagsProps) {
 
         return Result.success(this)
     }
-
 
     companion object {
         const val maxTags: Int = 5

@@ -8,7 +8,6 @@ data class ArticleProps(
     val description: String,
     val body: String,
     val tags: PostTags,
-    val slug: Slug,
     val author: User,
 )
 
@@ -54,31 +53,25 @@ data class Article(
             { throw PropertyValidationException(propertyName = "tags", errorMessage = (it.message ?: "")) }
         )
 
-
     var slug: Slug
         get() = Slug.fromString(slugValue)
         set(value) {
             slugValue = value.value
         }
 
-    fun updateSlug(newSlug: String) {
-        this.slug = Slug.fromString(newSlug)
-    }
-
     fun addTag(tag: PostTag) {
         val newTags = articleTags.addTag(tag).fold(
             { it },
-            { throw PropertyValidationException(propertyName = "tags", errorMessage = (it.message ?: "")) }
+            { throw it }
         )
 
         tags = newTags.toStringList()
     }
 
-
     companion object {
         fun createArticle(articleProps: ArticleProps): Article {
 
-            val (title, description, body, tags, slug, author) = articleProps
+            val (title, description, body, tags, author) = articleProps
 
             val article = Article(
                 title = title.value,
