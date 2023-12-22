@@ -7,7 +7,6 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.data.domain.Sort
 
 class ArticleFetcherServiceTest {
 
@@ -23,11 +22,6 @@ class ArticleFetcherServiceTest {
 
     @Test
     fun `getAllArticles returns mapped articles`() {
-
-        // setup
-        every {
-            articleRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
-        } returns mockArticles
 
         // Act
         val result = articleFetcherService.getAllArticles()
