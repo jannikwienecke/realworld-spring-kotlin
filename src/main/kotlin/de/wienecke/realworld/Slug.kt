@@ -9,13 +9,28 @@ class Slug private constructor(val value: String) {
             return Slug(input.toSlug())
         }
 
-
         private fun validate(input: String) {
             if (input.isBlank()) {
                 throw IllegalArgumentException("Slug must not be blank")
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Slug
+
+        return value == other.value
+    }
+
+    override fun hashCode(): Int {
+        return value.hashCode()
+    }
+
+//    equals and hashCode
+
 }
 
 fun String.toSlug() = this.lowercase(Locale.getDefault())

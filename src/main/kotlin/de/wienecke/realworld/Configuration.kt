@@ -4,9 +4,8 @@ import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-
 @Configuration
-class BlogConfiguration {
+class RealWorldConfiguration {
 
     @Bean
     fun databaseInitializer(
@@ -49,7 +48,7 @@ class BlogConfiguration {
             val articles = rawArticleList.map { rawArticle ->
                 Article(
                     title = rawArticle.title,
-                    description = rawArticle.description,
+                    description = rawArticle.description ?: "",
                     author = johnDoe,
                     body = rawArticle.body,
                     tags = rawArticle.tags,
@@ -61,3 +60,4 @@ class BlogConfiguration {
         }
     }
 }
+

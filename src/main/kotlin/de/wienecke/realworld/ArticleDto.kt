@@ -12,9 +12,13 @@ data class ArticleDto(
 )
 
 data class RawArticleData(
+    @field:Size(min = PostTitle.minLength, message = "Title length must be at least ${PostTitle.minLength} characters")
+    @field:Size(max = PostTitle.maxLength, message = "Title length must be at most ${PostTitle.maxLength} characters")
     val title: String,
-    val description: String,
+    val description: String?,
+    @field:Size(min = 1, message = "Body must not be empty")
     val body: String,
+    @field:Size(max = 5, message = "You can only add up to 5 tags")
     val tags: Set<String>
 )
 

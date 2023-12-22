@@ -8,7 +8,6 @@ class ArticleService(
     private val userRepository: UserRepository
 ) {
 
-
     fun createArticle(rawArticleData: RawArticleData): ArticleDto {
 
         val user = userRepository.findByLogin("johnDoe") ?: throw UserNotFoundException("johnDoe")
@@ -22,7 +21,6 @@ class ArticleService(
             { throw PropertyValidationException(propertyName = "title", errorMessage = (it.message ?: "")) }
         )
 
-
         val postTags = PostTags.fromStringList(tags.toList()).fold(
             { it },
             { throw PropertyValidationException(propertyName = "tags", errorMessage = (it.message ?: "")) }
@@ -32,11 +30,10 @@ class ArticleService(
         Article.createArticle(
             ArticleProps(
                 title = postTitle,
-                description = description,
+                description = description ?: "",
                 body = body,
                 author = user,
                 tags = postTags,
-                slug = Slug.fromString(postTitle.value)
             )
         ).let { article ->
             val savedArticle = articleRepository.save(article)

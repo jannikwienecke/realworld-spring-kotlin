@@ -19,9 +19,10 @@ class GlobalExceptionHandler {
         return ResponseEntity(ex.message, HttpStatus.UNAUTHORIZED)
     }
 
-
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgumentException(ex: IllegalArgumentException): ResponseEntity<ValidationErrorResponse> {
+        println("____IllegalArgumentException: ${ex.message}")
+
         val errors = mapOf("title" to ex.message.toString())
         return ResponseEntity(ValidationErrorResponse(errors), HttpStatus.BAD_REQUEST)
     }

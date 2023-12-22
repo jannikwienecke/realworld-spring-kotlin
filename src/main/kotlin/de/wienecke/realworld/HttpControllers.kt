@@ -10,7 +10,6 @@ import kotlin.reflect.full.memberProperties
 @RequestMapping("/api/articles")
 @Validated
 class ArticleController(
-    val articleRepository: ArticleRepository,
     val articleFetcherService: ArticleFetcherService,
     val articleService: ArticleService
 ) {
@@ -35,11 +34,13 @@ class ArticleController(
     }
 
     @PostMapping("/")
-    fun create(@RequestBody rawArticleData: RawArticleData): ArticleDto {
+    fun create(@RequestBody @Valid rawArticleData: RawArticleData): ArticleDto {
         RawArticleData::class.memberProperties.forEach { property ->
             val value = property.get(rawArticleData)
 
-            if (value == null) {
+
+
+            if (value == null && property.name != "description") {
                 throw IllegalArgumentException("${property.name} must not be null")
             }
         }
